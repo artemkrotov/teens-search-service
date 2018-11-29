@@ -3,6 +3,7 @@ package ru.krotov.teenssearchservice.web.configurations;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -17,6 +18,7 @@ public class TelegramConfiguration {
 
 	@Bean
 	TelegramBotsApi telegramBotsApi() {
+		ApiContextInitializer.init();
 		return new TelegramBotsApi();
 	}
 
