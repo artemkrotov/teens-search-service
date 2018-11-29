@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class VkConfiguration {
 
 	@Bean
-	VkApiClient vk () {
+	VkApiClient vkApiClient () {
 		return new VkApiClient(new HttpTransportClient());
 	}
 }
