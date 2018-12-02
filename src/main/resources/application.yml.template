@@ -1,3 +1,6 @@
+vk:
+  appId: ${VK_APP_ID:123456}
+  token: ${VK_TOKEN:test}
 telegram:
   default-bot-options:
     proxyHost: ${TELEGRAM_BOT_PROXY_HOST:localhost}

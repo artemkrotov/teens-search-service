@@ -20,9 +20,9 @@ public class VkSessionClient {
 			+ "&v={API_VERSION}"
 			+ "&response_type=token";
 
-	private void getSession(String appId) throws IOException {
+	public void getToken(Integer appId) throws IOException {
 		String reqUrl = AUTH_URL
-				.replace("{APP_ID}", appId)
+				.replace("{APP_ID}", String.valueOf(appId))
 				.replace("{PERMISSIONS}", "photos,messages,offline,groups")
 				.replace("{REDIRECT_URI}", "http://vk.com/blank.html")
 				.replace("{DISPLAY}", "page")
