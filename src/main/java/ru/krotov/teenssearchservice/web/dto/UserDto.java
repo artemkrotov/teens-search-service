@@ -1,5 +1,6 @@
 package ru.krotov.teenssearchservice.web.dto;
 
+import com.vk.api.sdk.objects.base.BaseObject;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,6 +19,12 @@ public class UserDto {
 	private String city;
 	private Integer age;
 	private boolean todayBirthDay;
+
+	public void setCityIfPresent (BaseObject city) {
+		if (city != null) {
+			this.setCity(city.getTitle());
+		}
+	}
 
 	public void setAgeAndTodayBirthDay(String bDay) {
 
