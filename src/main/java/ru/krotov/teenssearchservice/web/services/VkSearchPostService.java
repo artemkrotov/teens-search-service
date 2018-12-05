@@ -8,8 +8,9 @@ import com.vk.api.sdk.objects.wall.WallPostFull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.krotov.teenssearchservice.core.collections.CircleLinkedListWithLimit;
 import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
+import ru.krotov.teenssearchservice.core.collections.CircleLinkedListWithLimit;
+import ru.krotov.teenssearchservice.core.utils.GroupIndexUtils;
 import ru.krotov.teenssearchservice.web.converters.WallPostFullMessageDtoConverter;
 import ru.krotov.teenssearchservice.web.dto.MessageDto;
 
@@ -31,7 +32,8 @@ public class VkSearchPostService implements SearchPostService {
 	private final WallPostFullMessageDtoConverter wallPostFullMessageDtoConverter;
 	//TODO: Временно
 	private UserActor userActor;
-	private CircleLinkedListWithLimit<Integer> circleLinkedListWithLimit = new CircleLinkedListWithLimit<>(1000); // TODO: Подумать как посчитать оптимальный размер
+	private CircleLinkedListWithLimit<Integer> circleLinkedListWithLimit =
+			new CircleLinkedListWithLimit<>(GroupIndexUtils.groupIds.size() * 100); // TODO: Подумать как посчитать оптимальный размер
 
 	@PostConstruct
 	void init() {
@@ -53,24 +55,27 @@ public class VkSearchPostService implements SearchPostService {
 			// TODO: Между запросами должна быть задержка, иначе API VK даст микробан
 			TimeUnit.SECONDS.sleep(1);
 
-			List<WallPostFull> wallPostFulls = vkApiClient.wall().get(userActor).count(6).domain(groupDomain).execute().getItems();
+			List<WallPostFull> wallPostFulls = vkApiClient.wall().get(userActor).count(100).domain(groupDomain).execute().getItems();
 			return wallPostFulls.stream()
-					.filter(message -> {
-						Integer id = message.getId();
-
-						if (circleLinkedListWithLimit.contains(id)) {
-							return false;
-						}
-
-						circleLinkedListWithLimit.add(id);
-						return true;
-
-					})
+					.filter(this::isMessageUnique)
 					.map(wallPostFullMessageDtoConverter::convert)
 					.filter(Objects::nonNull)
 					.collect(Collectors.toList());
 		} catch (ApiException | ClientException | InterruptedException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	// TODO: Вынести в отдельный сервис и сделать сложную проверку
+	private boolean isMessageUnique(WallPostFull message) {
+
+		Integer id = message.getId();
+
+		if (circleLinkedListWithLimit.contains(id)) {
+			return false;
+		}
+
+		circleLinkedListWithLimit.add(id);
+		return true;
 	}
 }

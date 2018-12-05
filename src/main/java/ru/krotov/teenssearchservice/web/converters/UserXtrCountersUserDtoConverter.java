@@ -4,6 +4,7 @@ import com.vk.api.sdk.objects.users.UserXtrCounters;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+import ru.krotov.teenssearchservice.configurations.exceptions.InvalidUserException;
 import ru.krotov.teenssearchservice.core.utils.WomenNameIndexUtils;
 import ru.krotov.teenssearchservice.web.dto.UserDto;
 
@@ -14,14 +15,9 @@ public class UserXtrCountersUserDtoConverter implements Converter<UserXtrCounter
 	@Override
 	public UserDto convert(UserXtrCounters user) {
 
-		//TODO: Костыль
-		if (user == null) {
-			return null;
-		}
-
 		// TODO Здесь следует бросить эксепшн и перехватить его в сервисе
 		if (!WomenNameIndexUtils.isWoman(user.getFirstName())) {// TODO: Сделать Бин
-			//		return null;
+			throw new InvalidUserException(String.format("User with id = %d and name %s wasn't women", user.getId(), user.getFirstName()));
 		}
 
 		UserDto userDto = new UserDto();

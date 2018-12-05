@@ -1,7 +1,10 @@
 package ru.krotov.teenssearchservice.core.collections;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.LinkedList;
 
+@EqualsAndHashCode(callSuper = true, exclude = "limit")
 public class CircleLinkedListWithLimit<T> extends LinkedList<T> {
 
 	private final int limit;
@@ -10,14 +13,14 @@ public class CircleLinkedListWithLimit<T> extends LinkedList<T> {
 		this.limit = limit;
 	}
 
-
-	public synchronized boolean add (T element) {
+	@Override
+	public synchronized void addFirst (T element) {
 
 		if (super.size() >= limit) {
-			super.removeFirst();
+			super.removeLast();
 		}
 
-		return super.add(element);
+		super.addFirst(element);
 	}
 
 
