@@ -3,6 +3,8 @@ vk:
   token: ${VK_TOKEN:test}
 telegram:
   default-bot-options:
+    name: ${TELEGRAM_BOT_NAME:test}
+    token: ${TELEGRAM_BOT_TOKEN:test}
     proxyHost: ${TELEGRAM_BOT_PROXY_HOST:localhost}
     proxyPort: ${TELEGRAM_BOT_PROXY_PORT:8080}
     proxyType: ${TELEGRAM_BOT_PROXY_TYPE:SOCKS5}

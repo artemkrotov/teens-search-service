@@ -1,4 +1,4 @@
-package ru.krotov.teenssearchservice.configurations;
+package ru.krotov.teenssearchservice.configurations.properties;
 
 import lombok.Data;
 

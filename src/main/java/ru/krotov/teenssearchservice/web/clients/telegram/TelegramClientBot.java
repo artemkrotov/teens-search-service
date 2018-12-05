@@ -1,5 +1,6 @@
 package ru.krotov.teenssearchservice.web.clients.telegram;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -8,6 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.krotov.teenssearchservice.configurations.properties.DefaultBotOptionsConfigurationProperties;
 import ru.krotov.teenssearchservice.web.dto.MessageDto;
 import ru.krotov.teenssearchservice.web.dto.UserDto;
 
@@ -15,10 +17,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
+@RequiredArgsConstructor
 public class TelegramClientBot extends TelegramLongPollingBot {
 
-	public TelegramClientBot(DefaultBotOptions options) {
+	private final DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties;
+
+	public TelegramClientBot(DefaultBotOptions options, DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
 		super(options);
+		this.defaultBotOptionsConfigurationProperties = defaultBotOptionsConfigurationProperties;
 	}
 
 	@Override
@@ -98,11 +104,11 @@ public class TelegramClientBot extends TelegramLongPollingBot {
 
 	@Override
 	public String getBotUsername() {
-		return "AOEManager";
+		return defaultBotOptionsConfigurationProperties.getName();
 	}
 
 	@Override
 	public String getBotToken() {
-		return "764444874:AAEiuZ5mNrz5jymxZFPGFgsogcJkoaAe-9o";
+		return defaultBotOptionsConfigurationProperties.getToken();
 	}
 }

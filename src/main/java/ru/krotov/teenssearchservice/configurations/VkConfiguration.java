@@ -5,6 +5,7 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
 import ru.krotov.teenssearchservice.web.clients.vk.VkSessionClient;
 import ru.krotov.teenssearchservice.web.services.VkSessionService;
 

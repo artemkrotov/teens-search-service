@@ -8,6 +8,7 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import ru.krotov.teenssearchservice.configurations.properties.DefaultBotOptionsConfigurationProperties;
 import ru.krotov.teenssearchservice.web.clients.telegram.TelegramClientBot;
 
 import java.net.Authenticator;
@@ -48,9 +49,10 @@ public class TelegramConfiguration {
 	}
 
 	@Bean
-	public TelegramClientBot bot(TelegramBotsApi telegramBotsApi, DefaultBotOptions defaultBotOptions) {
+	public TelegramClientBot bot(TelegramBotsApi telegramBotsApi, DefaultBotOptions defaultBotOptions,
+								 DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
 		try {
-			TelegramClientBot telegramClientBot = new TelegramClientBot(defaultBotOptions);
+			TelegramClientBot telegramClientBot = new TelegramClientBot(defaultBotOptions, defaultBotOptionsConfigurationProperties);
 			telegramBotsApi.registerBot(telegramClientBot);
 			return telegramClientBot;
 		} catch (TelegramApiRequestException e) {

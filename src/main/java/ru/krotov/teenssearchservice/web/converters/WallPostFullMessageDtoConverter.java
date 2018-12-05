@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ru.krotov.teenssearchservice.configurations.VkConfigurationProperties;
+import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
 import ru.krotov.teenssearchservice.web.dto.MessageDto;
 import ru.krotov.teenssearchservice.web.dto.UserDto;
 
