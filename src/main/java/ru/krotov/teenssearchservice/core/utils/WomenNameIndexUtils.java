@@ -1,9 +1,9 @@
-package ru.krotov.teenssearchservice.web.clients;
+package ru.krotov.teenssearchservice.core.utils;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class WomenNames {
+public class WomenNameIndexUtils {
 
 	private static List<String> names = Arrays.asList(
 			"Ава", "Августа", "Августина", "Авдотья", "Аврора", "Агапия", "Агата", "Агафья", "Аглая", "Агния", "Агунда", "Ада", "Аделаида", "Аделина", "Адель", "Адиля",

@@ -1,4 +1,4 @@
-package ru.krotov.teenssearchservice.web.clients;
+package ru.krotov.teenssearchservice.web.clients.vk;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,7 +6,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-
 
 @Slf4j
 public class VkSessionClient {

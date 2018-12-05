@@ -8,8 +8,8 @@ import com.vk.api.sdk.objects.wall.WallPostFull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.krotov.teenssearchservice.web.clients.CircleLinkedListWithLimit;
-import ru.krotov.teenssearchservice.web.configurations.VkConfigurationProperties;
+import ru.krotov.teenssearchservice.core.collections.CircleLinkedListWithLimit;
+import ru.krotov.teenssearchservice.configurations.VkConfigurationProperties;
 import ru.krotov.teenssearchservice.web.converters.WallPostFullMessageDtoConverter;
 import ru.krotov.teenssearchservice.web.dto.MessageDto;
 

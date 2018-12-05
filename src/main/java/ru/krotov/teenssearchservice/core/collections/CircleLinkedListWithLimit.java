@@ -1,4 +1,4 @@
-package ru.krotov.teenssearchservice.web.clients;
+package ru.krotov.teenssearchservice.core.collections;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package ru.krotov.teenssearchservice.web.clients;
+package ru.krotov.teenssearchservice.web.clients.telegram;
 
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -12,12 +12,12 @@ import ru.krotov.teenssearchservice.web.dto.MessageDto;
 import ru.krotov.teenssearchservice.web.dto.UserDto;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class Bot extends TelegramLongPollingBot {
+public class TelegramClientBot extends TelegramLongPollingBot {
 
-
-	public Bot(DefaultBotOptions options) {
+	public TelegramClientBot(DefaultBotOptions options) {
 		super(options);
 	}
 
@@ -30,9 +30,22 @@ public class Bot extends TelegramLongPollingBot {
 	}
 
 	//TODO Максимальная длина сообщения 4096, возможно возникновение проблем если символов будет больше.
-	//Раньше был метод spltitByLength, который резал сообщения по 4096 символов (можно посмотреть в истории гита)
+	//Раньше был метод splitByLength, который резал сообщения по 4096 символов (можно посмотреть в истории гита)
 	public synchronized void sendMsg(String chatId, List<MessageDto> messageDtos) {
 		messageDtos.forEach(messageDto -> sendMsg(chatId, messageDto));
+	}
+
+	// TODO Зачем synchronized?
+	private synchronized void sendMsg(String chatId, MessageDto messageDto) {
+
+		SendPhoto sendPhoto = makePhoto(messageDto, chatId);
+
+		try {
+			execute(sendPhoto);
+			TimeUnit.SECONDS.sleep(1);
+		} catch (TelegramApiException | InterruptedException e) {
+			log.error("Exception: {}", e.toString());
+		}
 	}
 
 	private SendPhoto makePhoto(MessageDto messageDto, String chatId) {
@@ -44,7 +57,6 @@ public class Bot extends TelegramLongPollingBot {
 		sendPhoto.setParseMode(ParseMode.MARKDOWN);
 		return sendPhoto;
 	}
-
 
 	private String makeCaption(MessageDto messageDto) {
 
@@ -82,18 +94,6 @@ public class Bot extends TelegramLongPollingBot {
 		sb.append("\n\n").append(messageDto.getMessage());
 
 		return sb.toString();
-	}
-
-
-	public synchronized void sendMsg(String chatId, MessageDto messageDto) {
-
-		SendPhoto sendPhoto = makePhoto(messageDto, chatId);
-
-		try {
-			execute(sendPhoto);
-		} catch (TelegramApiException e) {
-			log.error("Exception: {}", e.toString());
-		}
 	}
 
 	@Override

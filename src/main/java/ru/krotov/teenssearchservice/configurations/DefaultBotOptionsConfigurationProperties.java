@@ -1,4 +1,4 @@
-package ru.krotov.teenssearchservice.web.configurations;
+package ru.krotov.teenssearchservice.configurations;
 
 import lombok.Data;
 import org.telegram.telegrambots.bots.DefaultBotOptions;

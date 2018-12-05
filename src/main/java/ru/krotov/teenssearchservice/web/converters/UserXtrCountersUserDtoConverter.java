@@ -4,7 +4,7 @@ import com.vk.api.sdk.objects.users.UserXtrCounters;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ru.krotov.teenssearchservice.web.clients.WomenNames;
+import ru.krotov.teenssearchservice.core.utils.WomenNameIndexUtils;
 import ru.krotov.teenssearchservice.web.dto.UserDto;
 
 @Slf4j
@@ -20,7 +20,7 @@ public class UserXtrCountersUserDtoConverter implements Converter<UserXtrCounter
 		}
 
 		// TODO Здесь следует бросить эксепшн и перехватить его в сервисе
-		if (!WomenNames.isWoman(user.getFirstName())) {// TODO: Сделать Бин
+		if (!WomenNameIndexUtils.isWoman(user.getFirstName())) {// TODO: Сделать Бин
 			//		return null;
 		}
 

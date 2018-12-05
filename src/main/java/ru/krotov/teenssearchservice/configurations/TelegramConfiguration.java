@@ -1,4 +1,4 @@
-package ru.krotov.teenssearchservice.web.configurations;
+package ru.krotov.teenssearchservice.configurations;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
-import ru.krotov.teenssearchservice.web.clients.Bot;
+import ru.krotov.teenssearchservice.web.clients.telegram.TelegramClientBot;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
@@ -48,11 +48,11 @@ public class TelegramConfiguration {
 	}
 
 	@Bean
-	public Bot bot(TelegramBotsApi telegramBotsApi, DefaultBotOptions defaultBotOptions) {
+	public TelegramClientBot bot(TelegramBotsApi telegramBotsApi, DefaultBotOptions defaultBotOptions) {
 		try {
-			Bot bot = new Bot(defaultBotOptions);
-			telegramBotsApi.registerBot(bot);
-			return bot;
+			TelegramClientBot telegramClientBot = new TelegramClientBot(defaultBotOptions);
+			telegramBotsApi.registerBot(telegramClientBot);
+			return telegramClientBot;
 		} catch (TelegramApiRequestException e) {
 			throw new RuntimeException(e);
 		}

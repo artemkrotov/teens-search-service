@@ -1,11 +1,11 @@
-package ru.krotov.teenssearchservice.web.configurations;
+package ru.krotov.teenssearchservice.configurations;
 
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.krotov.teenssearchservice.web.clients.VkSessionClient;
+import ru.krotov.teenssearchservice.web.clients.vk.VkSessionClient;
 import ru.krotov.teenssearchservice.web.services.VkSessionService;
 
 @Configuration

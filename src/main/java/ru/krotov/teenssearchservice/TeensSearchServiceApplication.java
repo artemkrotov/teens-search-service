@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import ru.krotov.teenssearchservice.web.configurations.TelegramConfiguration;
-import ru.krotov.teenssearchservice.web.configurations.VkConfiguration;
+import ru.krotov.teenssearchservice.configurations.TelegramConfiguration;
+import ru.krotov.teenssearchservice.configurations.VkConfiguration;
 
 @Import(value = {
 		TelegramConfiguration.class, VkConfiguration.class
