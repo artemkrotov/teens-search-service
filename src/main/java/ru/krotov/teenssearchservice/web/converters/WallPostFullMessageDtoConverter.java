@@ -52,7 +52,6 @@ public class WallPostFullMessageDtoConverter implements Converter<WallPostFull, 
 			log.error(e.getMessage());
 			return null;
 		} catch (InvalidUserException e) {
-			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -73,6 +72,7 @@ public class WallPostFullMessageDtoConverter implements Converter<WallPostFull, 
 
 			return userXtrCounters.stream()
 					.findAny()
+					.filter(userXtrCounter -> !userXtrCounter.getPhotoMaxOrig().contains("deactivated"))
 					.orElseThrow(() -> new UserNotFoundException(String.format("User from wallPost with id = %d wasn't founded!", wallPostFull.getId())));
 		} catch (Exception e) {
 			throw new UserNotFoundException(String.format("User wasn't founded! Reason: %s", e.getMessage()));

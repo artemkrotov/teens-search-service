@@ -26,7 +26,7 @@ public class UserXtrCountersUserDtoConverter implements Converter<UserXtrCounter
 		userDto.setVk("https://vk.com/" + user.getDomain());
 		userDto.setCityIfPresent(user.getCity());
 		userDto.setAgeAndTodayBirthDay(user.getBdate());
-		userDto.setPhotoUrl(user.getPhoto400Orig());
+		userDto.setPhotoUrl(user.getPhotoMaxOrig());
 
 		return userDto;
 	}

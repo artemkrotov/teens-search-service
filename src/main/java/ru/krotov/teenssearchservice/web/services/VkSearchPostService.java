@@ -32,7 +32,7 @@ public class VkSearchPostService implements SearchPostService {
 	private final WallPostFullMessageDtoConverter wallPostFullMessageDtoConverter;
 	//TODO: Временно
 	private UserActor userActor;
-	private CircleLinkedListWithLimit<Integer> circleLinkedListWithLimit =
+	private CircleLinkedListWithLimit<String> circleLinkedListWithLimit =
 			new CircleLinkedListWithLimit<>(GroupIndexUtils.groupIds.size() * 100); // TODO: Подумать как посчитать оптимальный размер
 
 	@PostConstruct
@@ -69,13 +69,13 @@ public class VkSearchPostService implements SearchPostService {
 	// TODO: Вынести в отдельный сервис и сделать сложную проверку
 	private boolean isMessageUnique(WallPostFull message) {
 
-		Integer id = message.getId();
+		String text = message.getText();
 
-		if (circleLinkedListWithLimit.contains(id)) {
+		if (circleLinkedListWithLimit.contains(text)) {
 			return false;
 		}
 
-		circleLinkedListWithLimit.add(id);
+		circleLinkedListWithLimit.add(text);
 		return true;
 	}
 }

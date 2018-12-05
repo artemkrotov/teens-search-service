@@ -9,7 +9,11 @@ import java.util.List;
 public class GroupIndexUtils {
 
 	public static List<String> groupIds = Arrays.asList(
-			"vpiski_moscow"
+			"vpiski_moscow",
+			"club132539557",
+			"vpiskivzeleke",
+			"club126848126",
+			"mosvpiski5"
 	);
 
 }

@@ -24,7 +24,7 @@ public class CheckMessageJob {
 	public void checkMessages () {
 		// todosomething
 		List<MessageDto> messageDtos = vkSearchPostService.findMessages(GroupIndexUtils.groupIds);
-		telegramClientBot.sendMsg("281490960", messageDtos);
+		telegramClientBot.sendMsg(messageDtos);
 	}
 
 }

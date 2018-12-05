@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class TelegramClientBot extends TelegramLongPollingBot {
 
+	private static final String CHAT_ID = "-262297048";
 	private final DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties;
 
 	public TelegramClientBot(DefaultBotOptions options, DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
@@ -29,10 +31,16 @@ public class TelegramClientBot extends TelegramLongPollingBot {
 
 	@Override
 	public void onUpdateReceived(Update update) {
+
+		SendMessage sendMessage = new SendMessage();
 		Message message = update.getMessage();
-		MessageDto messageDto = new MessageDto();
-		messageDto.setMessage(message.getText());
-		sendMsg(message.getChatId().toString(), messageDto);
+		sendMessage.setText(String.format("%s: %s", message.getChatId(), message.getText()));
+		sendMessage.setChatId(message.getChatId());
+		try {
+			execute(sendMessage);
+		} catch (TelegramApiException e) {
+			log.error(e.getMessage());
+		}
 	}
 
 	//TODO Максимальная длина сообщения 4096, возможно возникновение проблем если символов будет больше.
@@ -40,6 +48,11 @@ public class TelegramClientBot extends TelegramLongPollingBot {
 	public synchronized void sendMsg(String chatId, List<MessageDto> messageDtos) {
 		messageDtos.forEach(messageDto -> sendMsg(chatId, messageDto));
 	}
+
+	public synchronized void sendMsg(List<MessageDto> messageDtos) {
+		messageDtos.forEach(messageDto -> sendMsg(CHAT_ID, messageDto));
+	}
+
 
 	// TODO Зачем synchronized?
 	private synchronized void sendMsg(String chatId, MessageDto messageDto) {
@@ -50,7 +63,7 @@ public class TelegramClientBot extends TelegramLongPollingBot {
 			execute(sendPhoto);
 			TimeUnit.SECONDS.sleep(1);
 		} catch (TelegramApiException | InterruptedException e) {
-			log.error("Exception: {}", e.toString());
+			log.error("Exception: {} \n Dto: {}", e.toString(), sendPhoto);
 		}
 	}
 
