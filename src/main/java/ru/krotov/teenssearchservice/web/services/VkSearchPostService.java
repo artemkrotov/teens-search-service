@@ -7,7 +7,9 @@ import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.wall.WallPostFull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ru.krotov.teenssearchservice.configurations.filters.Filter;
 import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
 import ru.krotov.teenssearchservice.core.collections.CircleLinkedListWithLimit;
 import ru.krotov.teenssearchservice.core.utils.GroupIndexUtils;
@@ -25,6 +27,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class VkSearchPostService implements SearchPostService {
+
+	@Qualifier("wallPostFullFilterExecutor")
+	private final Filter<WallPostFull> wallPostFullFilterExecutor;
 
 	//TODO: Написать анализатор который решает как частво запускать Scheduled
 	private final VkApiClient vkApiClient;
@@ -58,6 +63,7 @@ public class VkSearchPostService implements SearchPostService {
 			List<WallPostFull> wallPostFulls = vkApiClient.wall().get(userActor).count(100).domain(groupDomain).execute().getItems();
 			return wallPostFulls.stream()
 					.filter(this::isMessageUnique)
+					.filter(wallPostFullFilterExecutor::filter)
 					.map(wallPostFullMessageDtoConverter::convert)
 					.filter(Objects::nonNull)
 					.collect(Collectors.toList());
