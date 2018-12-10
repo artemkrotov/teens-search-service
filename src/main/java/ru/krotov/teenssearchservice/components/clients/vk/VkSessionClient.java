@@ -10,7 +10,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 @Slf4j
-@Component
 public class VkSessionClient implements SessionClient {
 
 	private static final String API_VERSION = "5.6";
