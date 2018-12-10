@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import ru.krotov.teenssearchservice.configurations.properties.DefaultBotOptionsConfigurationProperties;
-import ru.krotov.teenssearchservice.web.clients.telegram.TelegramClientBot;
+import ru.krotov.teenssearchservice.components.clients.telegram.TelegramClientBot;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
