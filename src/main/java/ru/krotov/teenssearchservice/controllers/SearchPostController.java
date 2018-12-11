@@ -18,14 +18,14 @@ import java.util.List;
 public class SearchPostController {
 
 	private final SearchPostService searchPostService;
-	private final TelegramClientBot telegramClientBot;
+//	private final TelegramClientBot telegramClientBot;
 	private final VkSessionService vkSessionService;
 
 	@GetMapping(path = "/get", produces = "application/json")
 	public List<TelegramMessageDto> get() {
 		List<String> groupIds = GroupIndexUtils.groupIds;
 		List<TelegramMessageDto> messages = searchPostService.findMessages(groupIds);
-		telegramClientBot.sendMsg("281490960", messages);
+//		telegramClientBot.sendMsg("281490960", messages);
 		return messages;
 	}
 

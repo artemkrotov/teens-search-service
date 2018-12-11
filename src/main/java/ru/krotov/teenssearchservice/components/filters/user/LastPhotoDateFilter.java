@@ -14,6 +14,7 @@ import ru.krotov.teenssearchservice.exceptions.UserNotFoundException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class LastPhotoDateFilter extends AbstractUserFilter {
@@ -33,6 +34,8 @@ public class LastPhotoDateFilter extends AbstractUserFilter {
 		try {
 			Integer fromId = userXtrCounters.getId();
 
+			TimeUnit.MILLISECONDS.sleep(200);
+
 			GetResponse response = vkApiClient.photos()
 					.get(userActor).albumId("profile").rev(false).ownerId(fromId)
 					.execute();
@@ -42,7 +45,7 @@ public class LastPhotoDateFilter extends AbstractUserFilter {
 					.orElseThrow(() -> new UserNotFoundException(String.format("User with id = %d have not profile photos!", fromId)));
 
 			//TODO: DateConverterUtil
-			LocalDate firstPhotoDate = new Date(profilePhoto.getDate())
+			LocalDate firstPhotoDate = new Date(profilePhoto.getDate()*1000L)
 					.toInstant()
 					.atZone(ZoneId.systemDefault())
 					.toLocalDate();
