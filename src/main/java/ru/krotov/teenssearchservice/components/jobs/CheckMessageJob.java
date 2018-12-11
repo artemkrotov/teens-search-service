@@ -17,7 +17,7 @@ import java.util.List;
 public class CheckMessageJob {
 
 	private final VkSearchPostService vkSearchPostService;
-	private final TelegramClientBot telegramClientBot;
+	private TelegramClientBot telegramClientBot;
 
 	// TODO: Вынести в конфиг
 	@Scheduled(fixedDelayString = "${job.checkMessage.delay}")
