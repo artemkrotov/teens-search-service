@@ -7,15 +7,14 @@ import com.vk.api.sdk.objects.wall.WallPostFull;
 import com.vk.api.sdk.queries.users.UserField;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import ru.krotov.teenssearchservice.exceptions.InvalidUserException;
 import ru.krotov.teenssearchservice.exceptions.UserNotFoundException;
-import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
 import ru.krotov.teenssearchservice.components.clients.telegram.dto.TelegramMessageDto;
 import ru.krotov.teenssearchservice.components.clients.telegram.dto.TelegramUserDto;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,15 +26,9 @@ public class WallPostFullMessageDtoConverter implements Converter<WallPostFull, 
 
 	private final UserXtrCountersUserDtoConverter userDtoConverter;
 	//TODO: Думаю здесь это лишнее
-	private final VkApiClient vkApiClient;
-	private final VkConfigurationProperties vkConfigurationProperties;
+	private VkApiClient vkApiClient;
 	//TODO: Временно
 	private UserActor userActor;
-
-	@PostConstruct
-	void init() {
-		userActor = new UserActor(vkConfigurationProperties.getAppId(), vkConfigurationProperties.getToken());
-	}
 
 	@Override
 	public TelegramMessageDto convert(WallPostFull wallPostFull) {
@@ -76,5 +69,15 @@ public class WallPostFullMessageDtoConverter implements Converter<WallPostFull, 
 		} catch (Exception e) {
 			throw new UserNotFoundException(String.format("User wasn't founded! Reason: %s", e.getMessage()));
 		}
+	}
+
+	@Autowired
+	public void setVkApiClient(VkApiClient vkApiClient) {
+		this.vkApiClient = vkApiClient;
+	}
+
+	@Autowired
+	public void setUserActor(UserActor userActor) {
+		this.userActor = userActor;
 	}
 }

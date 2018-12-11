@@ -1,6 +1,8 @@
 package ru.krotov.teenssearchservice.configurations;
 
 import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.Actor;
+import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,11 @@ public class VkConfiguration {
 	@Bean
 	VkApiClient vkApiClient () {
 		return new VkApiClient(new HttpTransportClient());
+	}
+
+	@Bean
+	UserActor getUserActor() {
+		return new UserActor(vkConfigurationProperties().getAppId(), vkConfigurationProperties().getToken());
 	}
 
 	@Bean
