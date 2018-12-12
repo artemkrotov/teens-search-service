@@ -1,7 +1,6 @@
 package ru.krotov.teenssearchservice.configurations;
 
 import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.Actor;
 import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
