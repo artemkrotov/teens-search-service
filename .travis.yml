@@ -10,3 +10,7 @@ notifications:
     - akrotov.direct@gmail.com
     on_success: never
     on_failure: always
+
+env:
+  global:
+    - CODECOV_TOKEN="ed56986c-87ec-4589-9835-99a84c0cb8bf"
