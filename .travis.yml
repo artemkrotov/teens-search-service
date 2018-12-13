@@ -11,8 +11,8 @@ after_success:
  # - export TAG='if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi"
   - export NAME=teens-search-service
   - docker build -t $NAME .
-  - docker tag $NAME artemkrotov/$NAME
-  - docker push $NAME
+  - docker tag $NAME/$TAG
+  - docker push artemkrotov/$NAME
 
 notifications:
   email:
