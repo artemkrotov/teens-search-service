@@ -98,6 +98,7 @@
 
 
 	<build>
+		<finalName>teens-search-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
