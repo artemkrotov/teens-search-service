@@ -10,9 +10,9 @@ after_success:
   - docker login -u $D_USER -p $D_PASSWORD
  # - export TAG='if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi"
   - export NAME=teens-search-service
-  - docker build -t $NAME .
-  - docker tag $NAME artemkrotov/$NAME
-  - docker push artemkrotov/$NAME
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker build -t $NAME .; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag $NAME artemkrotov/$NAME; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push artemkrotov/$NAME; fi
 
 notifications:
   email:
