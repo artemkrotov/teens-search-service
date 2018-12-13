@@ -13,6 +13,7 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker build -t $NAME .; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag $NAME artemkrotov/$NAME; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push artemkrotov/$NAME; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ssh akrotov_direct@35.243.171.14 /home/akrotov_direct/deploy.sh; fi
 
 notifications:
   email:
