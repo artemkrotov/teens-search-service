@@ -7,7 +7,7 @@ before_install:
   - sudo chmod 777 ./temp_ssh_key
   - sudo echo "$TEMP_SSH_KEY_ENV" >> ./temp_ssh_key
   - eval "$(ssh-agent -s)"
-  - sudo ssh-add -K ./temp_ssh_key
+  - ssh-add ./temp_ssh_key
 
 services:
   - docker
