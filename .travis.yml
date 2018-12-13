@@ -6,7 +6,7 @@ before_install:
   - sudo touch ./temp_ssh_key
   - sudo chmod 777 ./temp_ssh_key
   - sudo echo "$TEMP_SSH_KEY_ENV" >> ./temp_ssh_key
-  - sudo eval `ssh-agent -s`
+  - eval "$(ssh-agent -s)"
   - sudo ssh-add -K ./temp_ssh_key
 
 services:
