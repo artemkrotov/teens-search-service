@@ -3,10 +3,10 @@ jdk: oraclejdk8
 sudo: required
 
 before_install:
-  - touch /temp_ssh_key
-  - chmod 777 /temp_ssh_key
-  - echo "$TEMP_SSH_KEY_ENV" >> /temp_ssh_key
-  - ssh-add -K /temp_ssh_key
+  - sudo touch ./temp_ssh_key
+  - sudo chmod 777 ./temp_ssh_key
+  - sudo echo "$TEMP_SSH_KEY_ENV" >> ./temp_ssh_key
+  - sudo ssh-add -K ./temp_ssh_key
 
 services:
   - docker
