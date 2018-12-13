@@ -8,10 +8,10 @@ services:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - docker login -u $D_USER -p $D_PASSWORD
-  - export TAG='if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi"
+ # - export TAG='if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi"
   - export NAME=teens-search-service
   - docker build -t $NAME .
-  - docker tag $NAME/$TAG $NAME/$TAG
+  - docker tag $NAME artemkrotov/$NAME
   - docker push $NAME
 
 notifications:
