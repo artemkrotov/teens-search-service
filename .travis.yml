@@ -5,6 +5,9 @@ sudo: required
 services:
   - docker
 
+before_install:
+  - base64 --help
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - docker login -u $D_USER -p $D_PASSWORD
