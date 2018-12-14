@@ -5,9 +5,6 @@ sudo: required
 services:
   - docker
 
-before_install:
-  - base64 --help
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - docker login -u $D_USER -p $D_PASSWORD
@@ -16,7 +13,7 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag $NAME $DH_USER/$NAME; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DH_USER/$NAME; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then chmod 400 $SSH_PATH; fi
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then echo $RS_SSH_KEY | base64 -D > $SSH_PATH; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then echo $RS_SSH_KEY | base64 -d > $SSH_PATH; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then ssh -i $SSH_PATH -o StrictHostKeyChecking=no $RS_USER@$RS_ADDRESS /home/$RS_USER/$DEPLOY_SCRIPT; fi
 
 notifications:
