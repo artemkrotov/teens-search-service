@@ -4,12 +4,14 @@ sudo: required
 
 addons:
   ssh_known_hosts:
-    - 35.243.171.14
+    - $RS_ADDRESS
 
 services:
   - docker
 
 after_success:
+  - echo $RS_ADDRESS
+  - tail ~/.ssh/known_hosts -n 100
   - bash <(curl -s https://codecov.io/bash)
   - docker login -u $D_USER -p $D_PASSWORD
  # - export TAG='if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi"
