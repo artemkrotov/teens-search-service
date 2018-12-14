@@ -17,7 +17,7 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker build -t $NAME .; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag $NAME $DH_USER/$NAME; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DH_USER/$NAME; fi
-  - if [ "$TRAVIS_BRANCH" = "master" ]; thenchmod 400 $SSH_PATH; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then chmod 400 $SSH_PATH; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then ssh -i $SSH_PATH $RS_USER@$RS_ADDRESS /home/$RS_USER/DEPLOY_SCRIPT; fi
 
 notifications:
