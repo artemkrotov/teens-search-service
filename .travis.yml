@@ -2,8 +2,6 @@ language: java
 jdk: oraclejdk8
 sudo: required
 
-install:
-  - echo 'KEY' >> $HOME/.ssh/known_hosts
 addons:
   ssh_known_hosts:
     - 35.243.171.14
