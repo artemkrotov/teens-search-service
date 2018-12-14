@@ -3,6 +3,10 @@ jdk: oraclejdk8
 sudo: required
 
 before_install:
+  - ls -la ./
+
+  - ls -la /
+  - ls -la ~/
   - sudo touch ./temp_ssh_key
   - sudo chmod 777 ./temp_ssh_key
   - sudo echo "$TEMP_SSH_KEY_ENV" >> ./temp_ssh_key
