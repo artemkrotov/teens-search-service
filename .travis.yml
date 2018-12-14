@@ -7,7 +7,7 @@ before_install:
   - eval "$(ssh-agent -s)"
   - ssh-add ./travis-ci
   - echo '\n35.243.171.14 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNH0VvIsfbp5hFA3YmryEaaV4N8voVyC09Hpy+Y/Dtn4NnCJQNJNAxV5Kz82n6mtGSB4h6JzNi5V+QHAD3m/XFM=' >> $HOME/.ssh/known_host
-  - ssh akrotov_direct@35.243.171.14 /home/akrotov_direct/deploy.sh
+  - ssh -i ./travis-ci akrotov_direct@35.243.171.14 /home/akrotov_direct/deploy.sh
 
 addons:
   hosts:
