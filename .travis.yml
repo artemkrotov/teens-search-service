@@ -4,7 +4,7 @@ sudo: required
 
 addons:
   ssh_known_hosts:
-    - 35.243.171.14
+    - $RS_ADDRESS
 
 services:
   - docker
@@ -15,20 +15,18 @@ after_success:
  # - export TAG='if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi"
   - export NAME=teens-search-service
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker build -t $NAME .; fi
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag $NAME artemkrotov/$NAME; fi
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push artemkrotov/$NAME; fi
-  - chmod 400 ./travis-ci
-  - eval "$(ssh-agent -s)"
-  - ssh-add ./travis-ci
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then ssh akrotov_direct@35.243.171.14 /home/akrotov_direct/deploy.sh; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag $NAME $DH_USER/$NAME; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DH_USER/$NAME; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; thenchmod 400 $SSH_PATH; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ssh -i $SSH_PATH $RS_USER@$RS_ADDRESS /home/$RS_USER/DEPLOY_SCRIPT; fi
 
 notifications:
   email:
     recipients:
-    - akrotov.direct@gmail.com
+    - $MY_EMAIL
     on_success: never
     on_failure: always
 
 env:
   global:
-    - CODECOV_TOKEN="ed56986c-87ec-4589-9835-99a84c0cb8bf"
+    - CODECOV_TOKEN="$CODECOV_TOKEN"
