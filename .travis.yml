@@ -2,10 +2,6 @@ language: java
 jdk: oraclejdk8
 sudo: required
 
-addons:
-  ssh_known_hosts:
-    - $RS_ADDRESS
-
 services:
   - docker
 
@@ -20,9 +16,7 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag $NAME $DH_USER/$NAME; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DH_USER/$NAME; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then chmod 400 $SSH_PATH; fi
-  - eval "$(ssh-agent -s)"
-  - ssh-add ./travis-ci
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then ssh -i $SSH_PATH $RS_USER@$RS_ADDRESS /home/$RS_USER/$DEPLOY_SCRIPT; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ssh -i $SSH_PATH ssh -o StrictHostKeyChecking=no $RS_USER@$RS_ADDRESS /home/$RS_USER/$DEPLOY_SCRIPT; fi
 
 notifications:
   email:
