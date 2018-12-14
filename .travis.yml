@@ -3,14 +3,8 @@ jdk: oraclejdk8
 sudo: required
 
 before_install:
-  - sudo ls -la ./
-  - sudo ls -la /
-  - sudo ls -la ~/
-  - sudo touch ./temp_ssh_key
-  - sudo chmod 777 ./temp_ssh_key
-  - sudo echo "$TEMP_SSH_KEY_ENV" >> ./temp_ssh_key
   - eval "$(ssh-agent -s)"
-  - ssh-add ./travic-ci
+  - ssh-add ./travis-ci
 
 services:
   - docker
