@@ -6,11 +6,13 @@ spring:
       uri: ${CONFIG_URI:http://35.227.119.52:8888/}
       label: ${BRANCH:master}
       fail-fast: true
-    datasource:
-      url: jdbc:mysql://35.243.171.14:3306
-      data-username: root
-      data-password: 12345
-      driver-class-name: com.mysql.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://35.243.171.14:3306
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 12345
+
+
 
 
 
