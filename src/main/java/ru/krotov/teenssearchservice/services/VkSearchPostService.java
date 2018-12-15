@@ -9,18 +9,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ru.krotov.teenssearchservice.components.clients.telegram.dto.TelegramMessageDto;
+import ru.krotov.teenssearchservice.components.converters.WallPostFullMessageDtoConverter;
 import ru.krotov.teenssearchservice.components.filters.Filter;
 import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
-import ru.krotov.teenssearchservice.utils.collections.CircleLinkedListWithLimit;
-import ru.krotov.teenssearchservice.utils.GroupIndexUtils;
-import ru.krotov.teenssearchservice.components.converters.WallPostFullMessageDtoConverter;
-import ru.krotov.teenssearchservice.components.clients.telegram.dto.TelegramMessageDto;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -37,8 +34,6 @@ public class VkSearchPostService implements SearchPostService {
 	private final WallPostFullMessageDtoConverter wallPostFullMessageDtoConverter;
 	//TODO: Временно
 	private UserActor userActor;
-	private CircleLinkedListWithLimit<String> circleLinkedListWithLimit =
-			new CircleLinkedListWithLimit<>(GroupIndexUtils.groupIds.size() * 100); // TODO: Подумать как посчитать оптимальный размер
 
 	@PostConstruct
 	void init() {
@@ -56,32 +51,19 @@ public class VkSearchPostService implements SearchPostService {
 	@Override
 	public List<TelegramMessageDto> findMessages(String groupDomain) {
 		try {
+			List<WallPostFull> wallPostFulls = vkApiClient.wall()
+					.get(userActor)
+					.count(vkConfigurationProperties.getMessageBucketSize())
+					.domain(groupDomain)
+					.execute().getItems();
 
-			// TODO: Между запросами должна быть задержка, иначе API VK даст микробан
-			TimeUnit.SECONDS.sleep(1);
-
-			List<WallPostFull> wallPostFulls = vkApiClient.wall().get(userActor).count(100).domain(groupDomain).execute().getItems();
 			return wallPostFulls.stream()
-					.filter(this::isMessageUnique)
 					.filter(wallPostFullFilterExecutor::filter)
 					.map(wallPostFullMessageDtoConverter::convert)
 					.filter(Objects::nonNull)
 					.collect(Collectors.toList());
-		} catch (ApiException | ClientException | InterruptedException e) {
+		} catch (ApiException | ClientException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	// TODO: Вынести в отдельный сервис и сделать сложную проверку
-	private boolean isMessageUnique(WallPostFull message) {
-
-		String text = message.getText();
-
-		if (circleLinkedListWithLimit.contains(text)) {
-			return false;
-		}
-
-		circleLinkedListWithLimit.add(text);
-		return true;
 	}
 }
