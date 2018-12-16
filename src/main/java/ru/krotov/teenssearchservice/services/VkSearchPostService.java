@@ -9,10 +9,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.krotov.teenssearchservice.components.clients.telegram.dto.TelegramMessageDto;
-import ru.krotov.teenssearchservice.components.converters.WallPostFullMessageDtoConverter;
+import ru.krotov.teenssearchservice.components.converters.WallPostFullMessageConverter;
 import ru.krotov.teenssearchservice.components.filters.Filter;
 import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
+import ru.krotov.teenssearchservice.model.Message;
+import ru.krotov.teenssearchservice.repository.MessageRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
@@ -31,7 +32,7 @@ public class VkSearchPostService implements SearchPostService {
 	//TODO: Написать анализатор который решает как частво запускать Scheduled
 	private final VkApiClient vkApiClient;
 	private final VkConfigurationProperties vkConfigurationProperties;
-	private final WallPostFullMessageDtoConverter wallPostFullMessageDtoConverter;
+	private final WallPostFullMessageConverter wallPostFullMessageConverter;
 	//TODO: Временно
 	private UserActor userActor;
 
@@ -41,7 +42,7 @@ public class VkSearchPostService implements SearchPostService {
 	}
 
 	@Override
-	public List<TelegramMessageDto> findMessages(List<String> groupDomains) {
+	public List<Message> findMessages(List<String> groupDomains) {
 		return groupDomains.stream()
 				.map(this::findMessages)
 				.flatMap(Collection::stream)
@@ -49,7 +50,7 @@ public class VkSearchPostService implements SearchPostService {
 	}
 
 	@Override
-	public List<TelegramMessageDto> findMessages(String groupDomain) {
+	public List<Message> findMessages(String groupDomain) {
 		try {
 			List<WallPostFull> wallPostFulls = vkApiClient.wall()
 					.get(userActor)
@@ -59,7 +60,7 @@ public class VkSearchPostService implements SearchPostService {
 
 			return wallPostFulls.stream()
 					.filter(wallPostFullFilterExecutor::filter)
-					.map(wallPostFullMessageDtoConverter::convert)
+					.map(wallPostFullMessageConverter::convert)
 					.filter(Objects::nonNull)
 					.collect(Collectors.toList());
 		} catch (ApiException | ClientException e) {

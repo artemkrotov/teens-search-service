@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.krotov.teenssearchservice.model.StopWord;
 
 @Repository
-public interface StopWordRepository extends JpaRepository<Long, StopWord> {
+public interface StopWordRepository extends JpaRepository<StopWord, Long> {
 }

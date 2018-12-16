@@ -11,26 +11,27 @@ import ru.krotov.teenssearchservice.exceptions.InvalidUserException;
 import ru.krotov.teenssearchservice.exceptions.UserNotFoundException;
 import ru.krotov.teenssearchservice.components.clients.telegram.dto.TelegramMessageDto;
 import ru.krotov.teenssearchservice.components.clients.telegram.dto.TelegramUserDto;
+import ru.krotov.teenssearchservice.model.Message;
+import ru.krotov.teenssearchservice.model.User;
 
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WallPostFullMessageDtoConverter implements Converter<WallPostFull, TelegramMessageDto> {
+public class MessageTelegramMessageDtoConverter implements Converter<Message, TelegramMessageDto> {
 
-	private final UserXtrCountersUserDtoConverter userDtoConverter;
-	private final UserClient userClient;
+	private final UserTelegramUserDtoConverter userTelegramUserDtoConverter;
 
 	@Override
-	public TelegramMessageDto convert(WallPostFull wallPostFull) {
+	public TelegramMessageDto convert(Message message) {
 
 		try {
-			UserXtrCounters realUser = userClient.getUser(wallPostFull);
-			TelegramUserDto telegramUserDto = userDtoConverter.convert(realUser);
+			User user = message.getUser();
+			TelegramUserDto telegramUserDto = userTelegramUserDtoConverter.convert(user);
 
 			TelegramMessageDto telegramMessageDto = new TelegramMessageDto();
 			telegramMessageDto.setTelegramUserDto(telegramUserDto);
-			telegramMessageDto.setMessage(wallPostFull.getText());
+			telegramMessageDto.setMessage(message.getText());
 			return telegramMessageDto;
 		} catch (UserNotFoundException e) {
 			log.error(e.getMessage());

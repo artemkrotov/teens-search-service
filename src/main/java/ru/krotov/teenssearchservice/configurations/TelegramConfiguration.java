@@ -17,46 +17,46 @@ import java.net.PasswordAuthentication;
 @Configuration
 public class TelegramConfiguration {
 
-//	@Bean
-//	TelegramBotsApi telegramBotsApi() {
-//		ApiContextInitializer.init();
-//		return new TelegramBotsApi();
-//	}
-//
-//	@Bean
-//	@ConfigurationProperties(prefix = "telegram.default-bot-options")
-//	DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties() {
-//		return new DefaultBotOptionsConfigurationProperties();
-//	}
-//
-//	@Bean
-//	public DefaultBotOptions defaultBotOptions(DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
-//
-//		Authenticator.setDefault(new Authenticator() {
-//			@Override
-//			protected PasswordAuthentication getPasswordAuthentication() {
-//				return new PasswordAuthentication(
-//						defaultBotOptionsConfigurationProperties.getProxyUser(),
-//						defaultBotOptionsConfigurationProperties.getProxyPassword().toCharArray());
-//			}
-//		});
-//
-//		DefaultBotOptions defaultBotOptions = ApiContext.getInstance(DefaultBotOptions.class);
-//		defaultBotOptions.setProxyHost(defaultBotOptionsConfigurationProperties.getProxyHost());
-//		defaultBotOptions.setProxyPort(defaultBotOptionsConfigurationProperties.getProxyPort());
-//		defaultBotOptions.setProxyType(defaultBotOptionsConfigurationProperties.getProxyType());
-//		return defaultBotOptions;
-//	}
-//
-//	@Bean
-//	public TelegramClientBot bot(TelegramBotsApi telegramBotsApi, DefaultBotOptions defaultBotOptions,
-//								 DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
-//		try {
-//			TelegramClientBot telegramClientBot = new TelegramClientBot(defaultBotOptions, defaultBotOptionsConfigurationProperties);
-//			telegramBotsApi.registerBot(telegramClientBot);
-//			return telegramClientBot;
-//		} catch (TelegramApiRequestException e) {
-//			throw new RuntimeException(e);
-//		}
-//	}
+	@Bean
+	TelegramBotsApi telegramBotsApi() {
+		ApiContextInitializer.init();
+		return new TelegramBotsApi();
+	}
+
+	@Bean
+	@ConfigurationProperties(prefix = "telegram.default-bot-options")
+	DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties() {
+		return new DefaultBotOptionsConfigurationProperties();
+	}
+
+	@Bean
+	public DefaultBotOptions defaultBotOptions(DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
+
+		Authenticator.setDefault(new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(
+						defaultBotOptionsConfigurationProperties.getProxyUser(),
+						defaultBotOptionsConfigurationProperties.getProxyPassword().toCharArray());
+			}
+		});
+
+		DefaultBotOptions defaultBotOptions = ApiContext.getInstance(DefaultBotOptions.class);
+		defaultBotOptions.setProxyHost(defaultBotOptionsConfigurationProperties.getProxyHost());
+		defaultBotOptions.setProxyPort(defaultBotOptionsConfigurationProperties.getProxyPort());
+		defaultBotOptions.setProxyType(defaultBotOptionsConfigurationProperties.getProxyType());
+		return defaultBotOptions;
+	}
+
+	@Bean
+	public TelegramClientBot bot(TelegramBotsApi telegramBotsApi, DefaultBotOptions defaultBotOptions,
+								 DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
+		try {
+			TelegramClientBot telegramClientBot = new TelegramClientBot(defaultBotOptions, defaultBotOptionsConfigurationProperties);
+			telegramBotsApi.registerBot(telegramClientBot);
+			return telegramClientBot;
+		} catch (TelegramApiRequestException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

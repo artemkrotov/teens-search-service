@@ -24,9 +24,10 @@ public class SearchPostController {
 	@GetMapping(path = "/get", produces = "application/json")
 	public List<TelegramMessageDto> get() {
 		List<String> groupIds = GroupIndexUtils.groupIds;
-		List<TelegramMessageDto> messages = searchPostService.findMessages(groupIds);
+	//	List<TelegramMessageDto> messages = searchPostService.findMessages(groupIds);
 //		telegramClientBot.sendMsg("281490960", messages);
-		return messages;
+	//	return messages;
+		return null;
 	}
 
 	@PostMapping(path = "/send")

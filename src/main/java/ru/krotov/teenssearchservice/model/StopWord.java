@@ -10,15 +10,15 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "STOPWORD")
+@Table(name = "stopword")
 public class StopWord {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "ID", nullable = false)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "NAME")
+	@Column(name = "name")
 	private String name;
 
 }

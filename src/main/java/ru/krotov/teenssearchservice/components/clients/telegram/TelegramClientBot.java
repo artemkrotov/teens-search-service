@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class TelegramClientBot extends TelegramLongPollingBot {
 
-	private static final String CHAT_ID =  ""; // "-262297048";
+	private static final String CHAT_ID =  "281490960"; // "-262297048";
 	private final DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties;
 
 	public TelegramClientBot(DefaultBotOptions options, DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
