@@ -26,10 +26,6 @@ public class StopWordWallPostFullFilter extends AbstractWallPostFullFilter {
 	@Override
 	public boolean filter(WallPostFull wallPostFull) {
 
-		if (true) {
-			return true;
-		}
-
 		String text = wallPostFull.getText();
 		return filter(text);
 	}

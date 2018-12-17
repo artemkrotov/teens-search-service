@@ -21,6 +21,7 @@ public class WallPostFullFilterExecutor implements WallPostFullFilter {
 
 	@Override
 	public boolean filter(WallPostFull wallPostFull) {
+
 		return filters.stream().allMatch(filter -> {
 			boolean filterResult = filter.filter(wallPostFull);
 

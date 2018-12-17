@@ -17,4 +17,6 @@ public class DefaultBotOptionsConfigurationProperties {
 	private String proxyUser;
 	private String proxyPassword;
 
+	private String chatId;
+
 }

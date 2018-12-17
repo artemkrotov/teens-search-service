@@ -45,7 +45,7 @@ public class User {
 	@Column(name = "b_day")
 	private String bDay;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
 	private List<Message> messages = new ArrayList<>();
 
 	public void setCityIfPresent (BaseObject city) {

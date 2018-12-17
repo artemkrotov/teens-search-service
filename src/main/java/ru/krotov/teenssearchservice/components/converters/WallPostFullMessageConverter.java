@@ -14,6 +14,10 @@ import ru.krotov.teenssearchservice.model.User;
 import ru.krotov.teenssearchservice.repository.MessageRepository;
 import ru.krotov.teenssearchservice.repository.UserRepository;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 
 @Slf4j
 @Component
@@ -28,8 +32,10 @@ public class WallPostFullMessageConverter implements Converter<WallPostFull, Mes
 	@Override
 	public Message convert(WallPostFull wallPostFull) {
 
+		Message message = null;
 		try {
 			Integer userVkId = getVkId(wallPostFull);
+
 			User user = userRepository.findByVkId(userVkId);
 
 			if (user == null) {
@@ -41,26 +47,30 @@ public class WallPostFullMessageConverter implements Converter<WallPostFull, Mes
 				throw new RuntimeException("User hadn't be null!");
 			}
 
-			Message message = new Message();
+			message = new Message();
 			message.setUser(user);
+			message.setCreated(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) wallPostFull.getDate() * 1000), ZoneId.systemDefault()));
 			user.getMessages().add(message);
 			message.setText(wallPostFull.getText());
 
 			messageRepository.save(message);
+
 			return message;
 		} catch (UserNotFoundException e) {
 			log.error(e.getMessage());
-			return null;
 		} catch (InvalidUserException e) {
-			return null;
+			log.warn(e.getMessage());
+		} catch (Exception e) {
+			log.error("Message: {}, Error {}", message, e.getMessage());
 		}
+
+		return null;
 	}
 
 
 	// TODO: Запись может быть создана от имеени группы (разобраться)
 	private Integer getVkId(WallPostFull wallPostFull) {
-		Integer fromId = wallPostFull.getFromId();
-		return fromId;
+		return wallPostFull.getFromId();
 	}
 
 

@@ -22,10 +22,6 @@ public class UserFilterExecutor implements UserFilter {
 	@Override
 	public boolean filter(UserXtrCounters userXtrCounters) {
 
-		if (true) {
-			return true;
-		}
-
 		return filters.stream().allMatch(filter -> {
 			boolean filterResult = filter.filter(userXtrCounters);
 

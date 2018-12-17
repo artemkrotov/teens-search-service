@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class TelegramClientBot extends TelegramLongPollingBot {
 
-	private static final String CHAT_ID =  "281490960"; // "-262297048";
 	private final DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties;
 
 	public TelegramClientBot(DefaultBotOptions options, DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
@@ -53,15 +52,17 @@ public class TelegramClientBot extends TelegramLongPollingBot {
 	}
 
 	public synchronized void sendMsg(List<TelegramMessageDto> telegramMessageDtos) {
-		telegramMessageDtos.forEach(messageDto -> sendMsg(CHAT_ID, messageDto));
+		telegramMessageDtos.forEach(messageDto -> sendMsg(defaultBotOptionsConfigurationProperties.getChatId(), messageDto));
 		resendOldMessages();
 	}
 
 	private void resendOldMessages() {
-		log.info("Try to send oldUnSendedMessages");
-		List<TelegramMessageDto> oldUnSendedMessages = this.oldUnSendedMessages;
-		this.oldUnSendedMessages = new LinkedList<>();
-		oldUnSendedMessages.forEach(messageDto -> sendMsg(CHAT_ID, messageDto));
+		if (!this.oldUnSendedMessages.isEmpty()) {
+			log.info("Try to send oldUnSendedMessages");
+			List<TelegramMessageDto> oldUnSendedMessages = this.oldUnSendedMessages;
+			this.oldUnSendedMessages = new LinkedList<>();
+			oldUnSendedMessages.forEach(messageDto -> sendMsg(defaultBotOptionsConfigurationProperties.getChatId(), messageDto));
+		}
 	}
 
 	// TODO Зачем synchronized?
