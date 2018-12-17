@@ -15,8 +15,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
-
-
-
-
+management:
+  info:
+    git:
+      mode: full
