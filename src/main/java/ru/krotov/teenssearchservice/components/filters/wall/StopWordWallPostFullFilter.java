@@ -1,9 +1,8 @@
 package ru.krotov.teenssearchservice.components.filters.wall;
 
 import com.vk.api.sdk.objects.wall.WallPostFull;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.krotov.teenssearchservice.components.filters.Filter;
+import ru.krotov.teenssearchservice.components.filters.WallPostFullFilterExecutor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,7 @@ public class StopWordWallPostFullFilter extends AbstractWallPostFullFilter {
 			"куплю", "продаж", "покупк", "трава", "услуг", "массаж", "прыгну", "почувствова", "трус", "надевать",
 			"деньг", "денюж", "денеж", "подкиньте", "займите", "накаж", "наказ", "плохой", "плохая", "ласк", "нежность", "жар");
 
-	public StopWordWallPostFullFilter(@Qualifier("wallPostFullFilterExecutor") Filter<WallPostFull> filter) {
+	public StopWordWallPostFullFilter(WallPostFullFilterExecutor filter) {
 		super(filter);
 	}
 
@@ -30,11 +29,21 @@ public class StopWordWallPostFullFilter extends AbstractWallPostFullFilter {
 		return filter(text);
 	}
 
+	@Override
+	public String getErrorMessage(WallPostFull wallPostFull) {
+		return String.format("Message with id = %s have stopWord", wallPostFull.getId());
+	}
+
 	public boolean filter(String text) {
 		text = text.toLowerCase();
 		return Stream.of(text.split(" "))
 				.noneMatch(word -> stopWords.stream()
 						.anyMatch(word::contains)
 				);
+	}
+
+	@Override
+	public int getOrder() {
+		return 200;
 	}
 }

@@ -2,6 +2,7 @@ package ru.krotov.teenssearchservice.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
-@EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "message")
 public class Message {

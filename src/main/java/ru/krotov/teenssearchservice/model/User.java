@@ -3,16 +3,11 @@ package ru.krotov.teenssearchservice.model;
 import com.vk.api.sdk.objects.base.BaseObject;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
@@ -44,9 +39,6 @@ public class User {
 
 	@Column(name = "b_day")
 	private String bDay;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
-	private List<Message> messages = new ArrayList<>();
 
 	public void setCityIfPresent (BaseObject city) {
 		if (city != null) {

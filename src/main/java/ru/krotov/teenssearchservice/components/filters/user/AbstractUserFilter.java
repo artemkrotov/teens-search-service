@@ -1,16 +1,23 @@
 package ru.krotov.teenssearchservice.components.filters.user;
 
 import com.vk.api.sdk.objects.users.UserXtrCounters;
-import ru.krotov.teenssearchservice.components.filters.Filter;
+import ru.krotov.teenssearchservice.components.filters.Register;
+import ru.krotov.teenssearchservice.components.filters.Registrable;
+import ru.krotov.teenssearchservice.components.filters.UserFilterExecutor;
 
 public abstract class AbstractUserFilter implements UserFilter {
 
-	@Override
-	public void register(Filter<UserXtrCounters> filter) {
-		filter.register(this);
+	public AbstractUserFilter(UserFilterExecutor userFilterExecutor) {
+		register(userFilterExecutor);
 	}
 
-	public AbstractUserFilter(Filter<UserXtrCounters> filter) {
-		register(filter);
+	@Override
+	public void register(Register<UserXtrCounters> register) {
+		register.register(this);
+	}
+
+	@Override
+	public int compareTo(Registrable o) {
+		return this.getOrder() - o.getOrder();
 	}
 }

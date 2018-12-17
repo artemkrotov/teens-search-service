@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class CheckMessageJob {
 
 	private final VkSearchPostService vkSearchPostService;
-	private TelegramClientBot telegramClientBot;
+	private final TelegramClientBot telegramClientBot;
 	private final MessageTelegramMessageDtoConverter messageTelegramMessageDtoConverter;
 
 	// TODO: Вынести в конфиг

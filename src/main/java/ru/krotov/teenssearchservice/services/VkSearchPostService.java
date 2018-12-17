@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.krotov.teenssearchservice.components.converters.WallPostFullMessageConverter;
 import ru.krotov.teenssearchservice.components.filters.Filter;
+import ru.krotov.teenssearchservice.components.filters.WallPostFullFilterExecutor;
 import ru.krotov.teenssearchservice.configurations.properties.VkConfigurationProperties;
 import ru.krotov.teenssearchservice.model.Message;
-import ru.krotov.teenssearchservice.repository.MessageRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
@@ -26,8 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VkSearchPostService implements SearchPostService {
 
-	@Qualifier("wallPostFullFilterExecutor")
-	private final Filter<WallPostFull> wallPostFullFilterExecutor;
+	private final WallPostFullFilterExecutor wallPostFullFilterExecutor;
 
 	//TODO: Написать анализатор который решает как частво запускать Scheduled
 	private final VkApiClient vkApiClient;

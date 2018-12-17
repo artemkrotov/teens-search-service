@@ -1,26 +1,15 @@
 package ru.krotov.teenssearchservice.components.filters.wall;
 
-import com.vk.api.sdk.objects.wall.WallPostFull;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.krotov.teenssearchservice.components.filters.Filter;
+import ru.krotov.teenssearchservice.components.filters.WallPostFullFilterExecutor;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class StopWordWallPostFullFilterTest {
 
-	StopWordWallPostFullFilter stopWordWallPostFullFilter = new StopWordWallPostFullFilter(new Filter<WallPostFull>() {
-		@Override
-		public void register(Filter<WallPostFull> filter) {
-
-		}
-
-		@Override
-		public boolean filter(WallPostFull wallPostFull) {
-			return false;
-		}
-	});
+	private StopWordWallPostFullFilter stopWordWallPostFullFilter = new StopWordWallPostFullFilter(new WallPostFullFilterExecutor());
 
 	@Test
 	public void filter() {

@@ -3,30 +3,28 @@ package ru.krotov.teenssearchservice.components.filters;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.krotov.teenssearchservice.components.filters.user.UserFilter;
+import ru.krotov.teenssearchservice.exceptions.InvalidUserException;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Slf4j
 @Component
-public class UserFilterExecutor implements UserFilter {
+public class UserFilterExecutor implements Register<UserXtrCounters> {
 
-	private List<Filter<UserXtrCounters>> filters = new LinkedList<>();
+	private Set<Filter<UserXtrCounters>> filters = new TreeSet<>();
 
-	@Override
 	public void register(Filter<UserXtrCounters> filter) {
 		filters.add(filter);
 	}
 
-	@Override
 	public boolean filter(UserXtrCounters userXtrCounters) {
 
 		return filters.stream().allMatch(filter -> {
 			boolean filterResult = filter.filter(userXtrCounters);
 
 			if (!filterResult) {
-				log.error("Invalid user: ({}). Reason: {}", userXtrCounters, filter.getClass().getName());
+				throw new InvalidUserException(filter.getErrorMessage(userXtrCounters));
 			}
 
 			return filterResult;

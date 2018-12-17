@@ -1,16 +1,23 @@
 package ru.krotov.teenssearchservice.components.filters.wall;
 
 import com.vk.api.sdk.objects.wall.WallPostFull;
-import ru.krotov.teenssearchservice.components.filters.Filter;
+import ru.krotov.teenssearchservice.components.filters.Register;
+import ru.krotov.teenssearchservice.components.filters.Registrable;
+import ru.krotov.teenssearchservice.components.filters.WallPostFullFilterExecutor;
 
 public abstract class AbstractWallPostFullFilter implements WallPostFullFilter {
 
-	@Override
-	public void register(Filter<WallPostFull> filter) {
-		filter.register(this);
+	public AbstractWallPostFullFilter(WallPostFullFilterExecutor wallPostFullFilterExecutor) {
+		register(wallPostFullFilterExecutor);
 	}
 
-	public AbstractWallPostFullFilter(Filter<WallPostFull> filter) {
-		register(filter);
+	@Override
+	public void register(Register<WallPostFull> register) {
+		register.register(this);
+	}
+
+	@Override
+	public int compareTo(Registrable o) {
+		return this.getOrder() - o.getOrder();
 	}
 }

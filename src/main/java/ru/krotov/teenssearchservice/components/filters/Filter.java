@@ -1,8 +1,8 @@
 package ru.krotov.teenssearchservice.components.filters;
 
 
-public interface Filter <T> {
+public interface Filter <T> extends Registrable<T>, Comparable<Registrable> {
 
-	void register(Filter<T> filter);
 	boolean filter (T t);
+	String getErrorMessage(T t);
 }

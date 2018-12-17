@@ -6,13 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ru.krotov.teenssearchservice.components.clients.UserClient;
 import ru.krotov.teenssearchservice.exceptions.InvalidUserException;
 import ru.krotov.teenssearchservice.exceptions.UserNotFoundException;
 import ru.krotov.teenssearchservice.model.Message;
 import ru.krotov.teenssearchservice.model.User;
 import ru.krotov.teenssearchservice.repository.MessageRepository;
-import ru.krotov.teenssearchservice.repository.UserRepository;
+import ru.krotov.teenssearchservice.services.UserService;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -24,9 +23,7 @@ import java.time.ZoneId;
 @RequiredArgsConstructor
 public class WallPostFullMessageConverter implements Converter<WallPostFull, Message> {
 
-	private final UserXtrCountersUserConverter userXtrCountersUserConverter;
-	private final UserClient userClient;
-	private final UserRepository userRepository;
+	private final UserService userService;
 	private final MessageRepository messageRepository;
 
 	@Override
@@ -35,22 +32,10 @@ public class WallPostFullMessageConverter implements Converter<WallPostFull, Mes
 		Message message = null;
 		try {
 			Integer userVkId = getVkId(wallPostFull);
-
-			User user = userRepository.findByVkId(userVkId);
-
-			if (user == null) {
-				UserXtrCounters userXtrCounters = userClient.getUser(userVkId);
-				user = userXtrCountersUserConverter.convert(userXtrCounters);
-			}
-
-			if (user == null) {
-				throw new RuntimeException("User hadn't be null!");
-			}
-
+			User user = userService.getUser(userVkId);
 			message = new Message();
 			message.setUser(user);
 			message.setCreated(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) wallPostFull.getDate() * 1000), ZoneId.systemDefault()));
-			user.getMessages().add(message);
 			message.setText(wallPostFull.getText());
 
 			messageRepository.save(message);

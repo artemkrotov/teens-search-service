@@ -1,9 +1,8 @@
 package ru.krotov.teenssearchservice.components.filters.user;
 
 import com.vk.api.sdk.objects.users.UserXtrCounters;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.krotov.teenssearchservice.components.filters.Filter;
+import ru.krotov.teenssearchservice.components.filters.UserFilterExecutor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +40,7 @@ public class SexUserFilter extends AbstractUserFilter {
 
 	);
 
-	public SexUserFilter(@Qualifier("userFilterExecutor") Filter<UserXtrCounters> filter) {
+	public SexUserFilter(UserFilterExecutor filter) {
 		super(filter);
 	}
 
@@ -50,7 +49,17 @@ public class SexUserFilter extends AbstractUserFilter {
 		return isWoman(userXtrCounters.getFirstName());
 	}
 
+	@Override
+	public String getErrorMessage(UserXtrCounters userXtrCounters) {
+		return String.format("User with id = %d is not woman!", userXtrCounters.getId());
+	}
+
 	private boolean isWoman(String name) {
 		return names.contains(name);
+	}
+
+	@Override
+	public int getOrder() {
+		return 100;
 	}
 }
