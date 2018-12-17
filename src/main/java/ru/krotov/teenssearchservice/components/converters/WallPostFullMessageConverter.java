@@ -13,6 +13,7 @@ import ru.krotov.teenssearchservice.model.User;
 import ru.krotov.teenssearchservice.repository.MessageRepository;
 import ru.krotov.teenssearchservice.services.UserService;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -27,6 +28,7 @@ public class WallPostFullMessageConverter implements Converter<WallPostFull, Mes
 	private final MessageRepository messageRepository;
 
 	@Override
+	@Transactional
 	public Message convert(WallPostFull wallPostFull) {
 
 		Message message = null;

@@ -1,8 +1,6 @@
 package ru.krotov.teenssearchservice.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +27,7 @@ public class Message {
 	private String text;
 
 	@NotNull
-	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
 
