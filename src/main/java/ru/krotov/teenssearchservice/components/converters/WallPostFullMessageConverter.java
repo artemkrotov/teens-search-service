@@ -39,7 +39,6 @@ public class WallPostFullMessageConverter implements Converter<WallPostFull, Mes
 			message.setUser(user);
 			message.setCreated(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) wallPostFull.getDate() * 1000), ZoneId.systemDefault()));
 			message.setText(wallPostFull.getText());
-
 			messageRepository.save(message);
 
 			return message;

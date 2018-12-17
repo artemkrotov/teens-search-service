@@ -1,6 +1,7 @@
 package ru.krotov.teenssearchservice.model;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ public class Message {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "text")
+	@Column(name = "text", length = 4096)
 	private String text;
 
 	@NotNull
