@@ -1,6 +1,6 @@
 spring:
   application:
-    name: teens-search-service-1
+    name: teens-search-service
   cloud:
     config:
       uri: ${CONFIG_URI:http://35.227.119.52:8888/}
