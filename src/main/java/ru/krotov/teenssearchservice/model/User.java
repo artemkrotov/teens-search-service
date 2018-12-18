@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,15 +14,11 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 
 	@Column(name = "full_name")
 	private String fullName;
-
-	@Column(name = "vk_id")
-	private Integer vkId;
 
 	@Column(name = "vk_domain")
 	private String vkDomain;

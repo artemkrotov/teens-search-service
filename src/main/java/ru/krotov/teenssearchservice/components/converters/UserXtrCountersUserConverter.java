@@ -20,9 +20,9 @@ public class UserXtrCountersUserConverter implements Converter<UserXtrCounters, 
 
 		userFilterExecutor.filter(userXtrCounters);
 		User user = new User();
+		user.setId(userXtrCounters.getId());
 		user.setFullName(userXtrCounters.getFirstName() + " " + userXtrCounters.getLastName());
 		user.setInstagramId(userXtrCounters.getInstagram());
-		user.setVkId(userXtrCounters.getId());
 		user.setVkDomain("https://vk.com/" + userXtrCounters.getDomain());
 		user.setCityIfPresent(userXtrCounters.getCity());
 		user.setBDay(userXtrCounters.getBdate());

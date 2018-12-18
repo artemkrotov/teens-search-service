@@ -1,6 +1,5 @@
 package ru.krotov.teenssearchservice.components.converters;
 
-import com.vk.api.sdk.objects.users.UserXtrCounters;
 import com.vk.api.sdk.objects.wall.WallPostFull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +35,7 @@ public class WallPostFullMessageConverter implements Converter<WallPostFull, Mes
 			Integer userVkId = getVkId(wallPostFull);
 			User user = userService.getUser(userVkId);
 			message = new Message();
+			message.setId(wallPostFull.getId());
 			message.setUser(user);
 			message.setCreated(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) wallPostFull.getDate() * 1000), ZoneId.systemDefault()));
 			message.setText(wallPostFull.getText());

@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	@Transactional
-	@Query(value = "SELECT * FROM message m WHERE m.id = ?1 ORDER BY m.created ASC LIMIT 1", nativeQuery = true)
+	@Query(value = "SELECT * FROM message m WHERE m.user_id = ?1 ORDER BY m.created ASC LIMIT 1", nativeQuery = true)
 	Message findLastMessageByUserId (Integer userId);
 
 }

@@ -1,7 +1,6 @@
 package ru.krotov.teenssearchservice.model;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +19,8 @@ import java.time.LocalDateTime;
 public class Message {
 
 	@Id
-	@GeneratedValue
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 
 	@Column(name = "text", length = 4096)
 	private String text;

@@ -19,14 +19,14 @@ public class UserService {
 
 	public User getUser(Integer userVkId) {
 
-		User user = userRepository.findByVkId(userVkId);
+		User user = userRepository.findById(userVkId)
+				.orElseGet( () -> {
+					UserXtrCounters userXtrCounters = userClient.getUser(userVkId);
+					return userXtrCountersUserConverter.convert(userXtrCounters);
+				});
 
 		if (user == null) {
-			UserXtrCounters userXtrCounters = userClient.getUser(userVkId);
-			user = userXtrCountersUserConverter.convert(userXtrCounters);
-			if (user == null) {
-				throw new InvalidUserException("User hadn't be null!");
-			}
+			throw new InvalidUserException("User hadn't be null!");
 		}
 
 		return user;

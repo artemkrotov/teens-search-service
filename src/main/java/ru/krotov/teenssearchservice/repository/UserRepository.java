@@ -5,7 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.krotov.teenssearchservice.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-
-	User findByVkId(Integer vkId);
+public interface UserRepository extends JpaRepository<User, Integer> {
 }
