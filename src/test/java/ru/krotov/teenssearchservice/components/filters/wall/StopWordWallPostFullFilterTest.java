@@ -1,6 +1,7 @@
 package ru.krotov.teenssearchservice.components.filters.wall;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.krotov.teenssearchservice.components.filters.WallPostFullFilterExecutor;
 
@@ -12,6 +13,7 @@ public class StopWordWallPostFullFilterTest {
 	private StopWordWallPostFullFilter stopWordWallPostFullFilter = new StopWordWallPostFullFilter(new WallPostFullFilterExecutor());
 
 	@Test
+	@Ignore
 	public void filter() {
 
 		List<String> expectedStopWords = Arrays.asList("трах", "сосать", "сосну", "минет", "наркотики",
