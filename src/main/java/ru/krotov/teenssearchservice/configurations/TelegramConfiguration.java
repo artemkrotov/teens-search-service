@@ -1,15 +1,17 @@
 package ru.krotov.teenssearchservice.configurations;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
-import ru.krotov.teenssearchservice.configurations.properties.DefaultBotOptionsConfigurationProperties;
 import ru.krotov.teenssearchservice.components.clients.telegram.TelegramClientBot;
+import ru.krotov.teenssearchservice.configurations.properties.DefaultBotOptionsConfigurationProperties;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
@@ -30,7 +32,8 @@ public class TelegramConfiguration {
 	}
 
 	@Bean
-	public DefaultBotOptions defaultBotOptions(DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
+	@Profile("proxy")
+	public DefaultBotOptions defaultBotOptionsWithProxy(DefaultBotOptionsConfigurationProperties defaultBotOptionsConfigurationProperties) {
 
 		Authenticator.setDefault(new Authenticator() {
 			@Override
@@ -46,6 +49,12 @@ public class TelegramConfiguration {
 		defaultBotOptions.setProxyPort(defaultBotOptionsConfigurationProperties.getProxyPort());
 		defaultBotOptions.setProxyType(defaultBotOptionsConfigurationProperties.getProxyType());
 		return defaultBotOptions;
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public DefaultBotOptions defaultBotOptions() {
+		return ApiContext.getInstance(DefaultBotOptions.class);
 	}
 
 	@Bean
