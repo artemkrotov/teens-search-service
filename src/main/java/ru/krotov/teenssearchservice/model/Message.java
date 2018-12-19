@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +21,7 @@ public class Message {
 	@Column(name = "id", nullable = false)
 	private Integer id;
 
-	@Column(name = "text", length = 4096)
+	@Column(name = "text", length = 5000)
 	private String text;
 
 	@NotNull

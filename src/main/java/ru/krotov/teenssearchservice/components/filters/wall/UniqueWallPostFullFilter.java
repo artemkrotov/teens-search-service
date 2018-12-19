@@ -1,15 +1,12 @@
 package ru.krotov.teenssearchservice.components.filters.wall;
 
 import com.vk.api.sdk.objects.wall.WallPostFull;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import ru.krotov.teenssearchservice.components.filters.WallPostFullFilterExecutor;
 import ru.krotov.teenssearchservice.model.Message;
 import ru.krotov.teenssearchservice.repository.MessageRepository;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Component
 public class UniqueWallPostFullFilter extends AbstractWallPostFullFilter {
@@ -31,9 +28,9 @@ public class UniqueWallPostFullFilter extends AbstractWallPostFullFilter {
 			return true;
 		}
 
-		boolean isNotEqualMessage = !lastMessageByUserId.getId().equals(wallPostFull.getId());
+		boolean isAfter = lastMessageByUserId.getId() < wallPostFull.getId();
 		boolean isUserNotTimeOuted = lastMessageByUserId.getCreated().isBefore(LocalDateTime.now().minusMinutes(30)); // TODO: Хардкод, постоянная инициализация
-		return isNotEqualMessage && isUserNotTimeOuted;
+		return isAfter && isUserNotTimeOuted;
 	}
 
 	@Override

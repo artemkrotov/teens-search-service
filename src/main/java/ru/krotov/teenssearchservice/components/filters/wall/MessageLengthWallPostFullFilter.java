@@ -1,5 +1,6 @@
 package ru.krotov.teenssearchservice.components.filters.wall;
 
+import com.google.common.base.Utf8;
 import com.vk.api.sdk.objects.wall.WallPostFull;
 import org.springframework.stereotype.Component;
 import ru.krotov.teenssearchservice.components.filters.WallPostFullFilterExecutor;
@@ -14,7 +15,7 @@ public class MessageLengthWallPostFullFilter extends AbstractWallPostFullFilter 
 
 	@Override
 	public boolean filter(WallPostFull wallPostFull) {
-		return wallPostFull.getText().length() <= MAX_MESSAGE_LENGTH;
+		return Utf8.encodedLength(wallPostFull.getText()) <= MAX_MESSAGE_LENGTH;
 	}
 
 	@Override
