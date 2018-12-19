@@ -12,7 +12,11 @@ public class GroupIndexUtils {
 			"vpiski_moscow",
 			"vpiskivzeleke",
 			"club126848126",
-			"mosvpiski5"
+			"vpiska_moskva_vpiska_v_moskve",
+			"vpiski_on",
+			"partyinmoscowcity",
+			"vipvpiska",
+			"rusvpiski"
 	);
 
 }

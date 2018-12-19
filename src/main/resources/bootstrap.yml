@@ -14,7 +14,7 @@ spring:
     initialization-mode: always
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 management:
   info:
     git:
