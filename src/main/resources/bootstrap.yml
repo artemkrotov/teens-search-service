@@ -7,7 +7,7 @@ spring:
       label: ${BRANCH:master}
       fail-fast: true
   datasource:
-    url: jdbc:mysql://35.243.171.14:3306/TEENS?useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://34.73.104.128:3306/TEENS?useUnicode=yes&characterEncoding=UTF-8
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 12345
